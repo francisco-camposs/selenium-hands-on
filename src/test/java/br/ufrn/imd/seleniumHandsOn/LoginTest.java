@@ -63,9 +63,6 @@ public class LoginTest {
         sapienciaLoginPage.setUsernameInput("12345678");
         sapienciaLoginPage.setPasswordInput("12345678");
         sapienciaLoginPage.sendLogin();
-        assertDoesNotThrow(() -> {
-            sapienciaLoginPage.alertaIsPresent();
-        });
         assertEquals(driver.getCurrentUrl(), SAPIENCIA_URL+"/login?redirect=%2Fprojetos-vigentes");
     }
 

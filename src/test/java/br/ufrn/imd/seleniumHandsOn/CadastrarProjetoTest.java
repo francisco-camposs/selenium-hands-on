@@ -29,7 +29,6 @@ public class CadastrarProjetoTest {
     }
 
     static private ChromeOptions getOptions() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\55849\\Documents\\uni\\testes\\chromedriver_win32\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         options.addArguments("--incognito");
