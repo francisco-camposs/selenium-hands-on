@@ -29,13 +29,21 @@ public class CadastrarProjetoTest {
     }
 
     static private ChromeOptions getOptions() {
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\55849\\Documents\\uni\\testes\\chromedriver_win32\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
         options.addArguments("--incognito");
         return options;
     }
 
+    @BeforeEach
+    void bef() {
+        try {
+            sapienciaCadastroProjeto.alertText();
+        } catch (Exception e) {
 
+        }
+    }
     @Test
     @Order(1)
     void newProjectPageTest() {
@@ -84,6 +92,40 @@ public class CadastrarProjetoTest {
         });
     }
 
+    @Test
+    @Order(4)
+    void inserirParcelasBadPath() {
+        sapienciaCadastroProjeto.goToParcelaForm();
+        sapienciaCadastroProjeto.fillParcela1("");
+        sapienciaCadastroProjeto.fillParcela2("");
+        sapienciaCadastroProjeto.fillParcela3("");
+        sapienciaCadastroProjeto.fillParcela1("1234-");
+        sapienciaCadastroProjeto.fillParcela2("30000");
+        sapienciaCadastroProjeto.fillParcela3("30000");
+        sapienciaCadastroProjeto.advanceFormProjeto();
+        String text = sapienciaCadastroProjeto.alertText();
+        assertEquals("erro ao cadastrar parcelas do projeto\n" +
+                "o valor autorizado da parcela deve ser positivo", text.toLowerCase());
+    }
+
+    @Test
+    @Order(5)
+    void inserirParcelas() throws InterruptedException {
+        sapienciaCadastroProjeto.goToParcelaForm();
+        sapienciaCadastroProjeto.fillParcela1("");
+        sapienciaCadastroProjeto.fillParcela2("");
+        sapienciaCadastroProjeto.fillParcela3("");
+        sapienciaCadastroProjeto.fillParcela1("3000");
+        sapienciaCadastroProjeto.fillParcela2("3000");
+        sapienciaCadastroProjeto.fillParcela3("4000");
+        sapienciaCadastroProjeto.advanceFormProjeto();
+        String text = sapienciaCadastroProjeto.alertText();
+        assertEquals("parcela cadastrada com sucesso!\n" +
+                "parcela cadastrada com sucesso!", text.toLowerCase());
+    }
+
+
+
     private void fillFields() {
         sapienciaCadastroProjeto.fillTituloField("Titulo Teste 1");
         sapienciaCadastroProjeto.fillCodigoField("Codigo Teste 1");
@@ -92,6 +134,7 @@ public class CadastrarProjetoTest {
         sapienciaCadastroProjeto.fillReferenciaField("123456789");
         sapienciaCadastroProjeto.fillSigFundacaoField("123456789");
         sapienciaCadastroProjeto.fillValorTotalProjetoField("10000");
+
     }
 
     @AfterAll
