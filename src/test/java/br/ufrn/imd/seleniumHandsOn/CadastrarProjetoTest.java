@@ -50,7 +50,7 @@ public class CadastrarProjetoTest {
             this.login();
             this.openNewProjectPage();
         });
-        assertEquals(SAPIENCIA_URL+"/cadastro-projetos/novo-cadastro", driver.getCurrentUrl());\item
+        assertEquals(SAPIENCIA_URL+"/cadastro-projetos/novo-cadastro", driver.getCurrentUrl());
     }
 
     private void login() {
