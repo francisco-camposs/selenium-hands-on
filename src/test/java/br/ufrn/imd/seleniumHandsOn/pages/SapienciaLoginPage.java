@@ -29,7 +29,7 @@ public class SapienciaLoginPage {
     }
 
     public void setUsernameInput(String emailAddress) {
-        WebElement usernameInput =checkUsernameInput();
+        WebElement usernameInput = checkUsernameInput();
         usernameInput.sendKeys(emailAddress);
     }
 
