@@ -3,15 +3,11 @@ package br.ufrn.imd.seleniumHandsOn;
 
 import br.ufrn.imd.seleniumHandsOn.pages.SapienciaCadastroProjeto;
 import br.ufrn.imd.seleniumHandsOn.pages.SapienciaLoginPage;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,6 +21,7 @@ public class CadastrarProjetoTest {
 
     @BeforeAll
     static void beforeAll() {
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(getOptions());
         sapienciaLoginPage = new SapienciaLoginPage(driver);
         sapienciaCadastroProjeto = new SapienciaCadastroProjeto(driver);
@@ -32,9 +29,9 @@ public class CadastrarProjetoTest {
     }
 
     static private ChromeOptions getOptions() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\55849\\Documents\\uni\\testes\\chromedriver_win32\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
+        options.addArguments("--incognito");
         return options;
     }
 

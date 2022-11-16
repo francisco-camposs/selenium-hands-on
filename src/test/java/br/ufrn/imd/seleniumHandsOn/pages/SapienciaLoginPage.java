@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static java.lang.Thread.sleep;
+
 public class SapienciaLoginPage {
 
     private final WebDriver driver;
@@ -47,9 +49,9 @@ public class SapienciaLoginPage {
         signupButton.click();
     }
 
-    public void alertaIsPresent() {
-        WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(10));
-        w.until(ExpectedConditions.alertIsPresent());
+    public void alertaIsPresent() throws InterruptedException {
+        sleep(2000);
+        Alert alert = driver.switchTo().alert();
     }
 
 }
