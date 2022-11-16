@@ -50,7 +50,7 @@ public class CadastrarProjetoTest {
             this.login();
             this.openNewProjectPage();
         });
-        assertEquals(SAPIENCIA_URL+"/cadastro-projetos/novo-cadastro", driver.getCurrentUrl());
+        assertEquals(SAPIENCIA_URL+"/cadastro-projetos/novo-cadastro", driver.getCurrentUrl());\item
     }
 
     private void login() {
@@ -104,11 +104,8 @@ public class CadastrarProjetoTest {
 
     @Test
     @Order(5)
-    void insertParcelasBadPath() {
+    void insertParcelasNegativeValue() {
         sapienciaCadastroProjeto.goToParcelaForm();
-        sapienciaCadastroProjeto.fillParcela1("");
-        sapienciaCadastroProjeto.fillParcela2("");
-        sapienciaCadastroProjeto.fillParcela3("");
         sapienciaCadastroProjeto.fillParcela1("1234-");
         sapienciaCadastroProjeto.fillParcela2("30000");
         sapienciaCadastroProjeto.fillParcela3("30000");
