@@ -69,6 +69,17 @@ public class CadastrarProjetoTest {
 
     @Test
     @Order(2)
+    void formNewProjectTestNotAllFields() {
+        fillNotAllFields();
+        sapienciaCadastroProjeto.submitNewProjeto();
+        String text = sapienciaCadastroProjeto.alertText();
+        assertEquals("erro ao cadastrar dados do projeto\n" +
+                "a demanda não pode ser somente espaços em branco",text.toLowerCase());
+
+    }
+
+    @Test
+    @Order(3)
     void formNewProjectTest() {
         assertDoesNotThrow(() -> {
             sapienciaCadastroProjeto.checkTituloField();
@@ -82,7 +93,7 @@ public class CadastrarProjetoTest {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void newProjectTest() {
         assertDoesNotThrow(() -> {
             this.fillFields();
@@ -95,8 +106,8 @@ public class CadastrarProjetoTest {
     }
 
     @Test
-    @Order(4)
-    void inserirParcelasBadPath() {
+    @Order(5)
+    void insertParcelasBadPath() {
         sapienciaCadastroProjeto.goToParcelaForm();
         sapienciaCadastroProjeto.fillParcela1("");
         sapienciaCadastroProjeto.fillParcela2("");
@@ -111,12 +122,22 @@ public class CadastrarProjetoTest {
     }
 
     @Test
-    @Order(5)
-    void inserirParcelas() throws InterruptedException {
+    @Order(6)
+    void parcelasSunDonMatchValue() throws InterruptedException {
         sapienciaCadastroProjeto.goToParcelaForm();
-        sapienciaCadastroProjeto.fillParcela1("");
-        sapienciaCadastroProjeto.fillParcela2("");
-        sapienciaCadastroProjeto.fillParcela3("");
+        sapienciaCadastroProjeto.fillParcela1("6000");
+        sapienciaCadastroProjeto.fillParcela2("3000");
+        sapienciaCadastroProjeto.fillParcela3("4000");
+        sapienciaCadastroProjeto.advanceFormProjeto();
+        String text = sapienciaCadastroProjeto.alertText();
+        assertEquals("erro ao cadastrar parcelas do projeto\n"
+                        +"o valor autorizado das parcelas não pode exceder o valor autorizado fndct", text.toLowerCase());
+    }
+
+    @Test
+    @Order(7)
+    void insertParcelas() throws InterruptedException {
+        sapienciaCadastroProjeto.goToParcelaForm();
         sapienciaCadastroProjeto.fillParcela1("3000");
         sapienciaCadastroProjeto.fillParcela2("3000");
         sapienciaCadastroProjeto.fillParcela3("4000");
@@ -127,6 +148,30 @@ public class CadastrarProjetoTest {
     }
 
 
+    @Test
+    @Order(8)
+    void insertSubProjeto() {
+        sapienciaCadastroProjeto.goToSubProjetoForm();
+        sapienciaCadastroProjeto.addSubProjeto();
+        sapienciaCadastroProjeto.fillSiglaSubProjeto(1, "TESTE");
+        sapienciaCadastroProjeto.fillTituloSubProjeto(1, "TITULO TESTE");
+        sapienciaCadastroProjeto.fillSiglaSubProjeto(2, "TESTE");
+        sapienciaCadastroProjeto.fillTituloSubProjeto(2, "TITULO TESTE");
+    }
+
+    @Test
+    @Order(9)
+    void removeSubProjeto() {
+        sapienciaCadastroProjeto.addSubProjeto();
+        sapienciaCadastroProjeto.fillSiglaSubProjeto(1, "TESTE");
+        sapienciaCadastroProjeto.fillTituloSubProjeto(1, "TITULO TESTE");
+        sapienciaCadastroProjeto.fillSiglaSubProjeto(2, "TESTE");
+        sapienciaCadastroProjeto.fillTituloSubProjeto(2, "TITULO TESTE");
+        sapienciaCadastroProjeto.fillSiglaSubProjeto(3, "TESTE 3");
+        sapienciaCadastroProjeto.fillTituloSubProjeto(3, "TITULO TESTE 3");
+        sapienciaCadastroProjeto.removeSubProject(2);
+        assertEquals("TITULO TESTE 3", sapienciaCadastroProjeto.getTituloSubProjeto(2));
+    }
 
     private void fillFields() {
         sapienciaCadastroProjeto.fillTituloField("Titulo Teste 1");
@@ -136,7 +181,15 @@ public class CadastrarProjetoTest {
         sapienciaCadastroProjeto.fillReferenciaField("123456789");
         sapienciaCadastroProjeto.fillSigFundacaoField("123456789");
         sapienciaCadastroProjeto.fillValorTotalProjetoField("10000");
+    }
 
+    private void fillNotAllFields() {
+        sapienciaCadastroProjeto.fillTituloField("Titulo Teste 1");
+        sapienciaCadastroProjeto.fillCodigoField("Codigo Teste 1");
+        sapienciaCadastroProjeto.fillConvenioField("123456789");
+        sapienciaCadastroProjeto.fillReferenciaField("123456789");
+        sapienciaCadastroProjeto.fillSigFundacaoField("123456789");
+        sapienciaCadastroProjeto.fillValorTotalProjetoField("10000");
     }
 
     @AfterAll
